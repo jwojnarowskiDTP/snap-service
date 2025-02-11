@@ -5,15 +5,15 @@ description: |
   Add user and database PostgreSQL
 base: core22
 grade: stable
-confinement: strict
+confinement: devmode
 
 apps:
-  my-go-app:
-    command: bin/my-go-app
+  snap-service:
+    command: bin/snap-service
     plugs: [network, network-bind]
 
 parts:
-  my-go-app:
+  snap-sercice:
     plugin: go
     source: .
     build-packages: [gcc]
