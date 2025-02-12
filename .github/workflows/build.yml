@@ -15,4 +15,4 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: 🧪 Build snap on amd64
-        uses: snapcrafters/ci/test-snap-build@main
+        uses: canonical/data-platform-workflows/.github/workflows/build_snap.yaml@v29.0.5
