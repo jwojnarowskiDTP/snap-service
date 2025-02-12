@@ -1,11 +1,11 @@
 name: snap-services
-version: '1.0'
+version: "1.0"
 summary: Add user and database PostgreSQL
 description: |
   Add user and database PostgreSQL
 base: core22
 grade: stable
-confinement: devmode
+confinement: strict
 
 apps:
   snap-service:
@@ -13,8 +13,11 @@ apps:
     plugs: [network, network-bind]
 
 parts:
+  go-deps:
+    plugin: nil
+    build-packages: [golang-go, gcc]
+
   snap-service:
     plugin: go
     source: .
-    build-packages: [gcc]
-    go-buildtags: []
+    after: [go-deps]

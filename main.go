@@ -17,39 +17,39 @@ const (
 )
 
 func main() {
-	// Tworzenie connection stringa
+	// connection string
 	psqlInfo := fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
 		host, port, user, password, dbname)
 
-	// Nawiązywanie połączenia z bazą danych
+	// connection to database
 	db, err := sql.Open("postgres", psqlInfo)
 	if err != nil {
-		log.Fatalf("Nie udało się połączyć z bazą danych: %v", err)
+		log.Fatalf("Database connection failed: %v", err)
 	}
 	defer db.Close()
 
-	// Sprawdzenie połączenia
+	// connection check
 	err = db.Ping()
 	if err != nil {
-		log.Fatalf("Nie udało się pingować bazy danych: %v", err)
+		log.Fatalf("Problem with database ping: %v", err)
 	}
-	fmt.Println("Połączono z bazą danych!")
+	fmt.Println("Database connection sucesful!")
 
-	// Tworzenie użytkownika rizone
+	// create user rizone
 	createUserQuery := `CREATE USER rizone WITH LOGIN PASSWORD 'rizone';`
 	_, err = db.Exec(createUserQuery)
 	if err != nil {
-		log.Printf("Nie udało się utworzyć użytkownika: %v", err)
+		log.Printf("Database user init failure: %v", err)
 	} else {
-		fmt.Println("Użytkownik 'rizone' został utworzony.")
+		fmt.Println("Database user 'rizone' created.")
 	}
 
-	// Tworzenie bazy danych rizone
+	// create database rizone
 	createDbQuery := `CREATE DATABASE rizone OWNER rizone;`
 	_, err = db.Exec(createDbQuery)
 	if err != nil {
-		log.Printf("Nie udało się utworzyć bazy danych: %v", err)
+		log.Printf("Database init failure: %v", err)
 	} else {
-		fmt.Println("Baza danych 'rizone' została utworzona.")
+		fmt.Println("Database 'rizone' created.")
 	}
 }
