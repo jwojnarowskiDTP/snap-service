@@ -1,0 +1,30 @@
+name: Build Snap
+
+on:
+  push:
+    branches: [ main ]
+  pull_request:
+    branches: [ "**" ]
+  workflow_dispatch:
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up Snapcraft
+        uses: snapcore/action-build@v1
+        with:
+          version: 'latest/stable'
+
+      - name: Build Snap
+        run: snapcraft
+
+      - name: Upload Snap
+        uses: actions/upload-artifact@v4
+        with:
+          name: my-snap
+          path: ./*.snap
